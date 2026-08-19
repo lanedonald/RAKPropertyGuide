@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Donald Lane — Digital Card</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Markazi+Text:wght@500;600;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
   :root{
@@ -25,10 +25,33 @@
     background: radial-gradient(circle at 50% 0%, var(--navy-2) 0%, var(--navy) 65%);
     font-family:'Public Sans', sans-serif;
     color:var(--sand);
-    display:flex; align-items:center; justify-content:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
     padding:32px 16px;
     -webkit-font-smoothing:antialiased;
   }
+  .lang-toggle{
+    display:inline-flex;
+    border:1px solid var(--line);
+    border-radius:2px;
+    overflow:hidden;
+    margin-bottom:16px;
+  }
+  .lang-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.04em;
+    padding:8px 14px;
+    background:transparent;
+    color:var(--sand-dim);
+    border:none;
+    cursor:pointer;
+    transition: all .15s ease;
+  }
+  .lang-btn + .lang-btn{ border-left:1px solid var(--line); }
+  body.lang-ar .lang-btn + .lang-btn{ border-left:none; border-right:1px solid var(--line); }
+  .lang-btn.active{ background:var(--gold); color:var(--navy); font-weight:600; }
+  .lang-btn:hover:not(.active){ color:var(--gold-bright); }
+
   .card{
     width:100%;
     max-width:380px;
@@ -153,6 +176,22 @@
   }
   .card-foot a{color:var(--gold-bright); text-decoration:underline; text-underline-offset:2px;}
 
+  body.lang-ar{ direction:rtl; }
+  body.lang-ar, body.lang-ar h1{ font-family:'Markazi Text', 'Cairo', serif; }
+  body.lang-ar .card-top .role,
+  body.lang-ar .card-body{ font-family:'Cairo', sans-serif; }
+  body.lang-ar .card-top .eyebrow,
+  body.lang-ar .act,
+  body.lang-ar .info-list .k,
+  body.lang-ar .save-btn,
+  body.lang-ar .qr-block .eyebrow,
+  body.lang-ar .card-foot,
+  body.lang-ar .lang-btn{
+    font-family:'Cairo', sans-serif;
+    letter-spacing:0;
+    text-transform:none;
+  }
+
   @media (prefers-reduced-motion: reduce){
     .act{transition:none;}
     .save-btn{transition:none;}
@@ -161,49 +200,59 @@
 </style>
 </head>
 <body>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+</script>
+
+
+<div class="lang-toggle" role="group" aria-label="Language toggle">
+  <button type="button" class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+  <button type="button" class="lang-btn" id="btn-ar" onclick="setLang('ar')">عربي</button>
+</div>
 
 <div class="card">
   <div class="card-top">
-    <span class="eyebrow">K&amp;Core Real Estate</span>
+    <span class="eyebrow" data-i18n="agency">K&amp;Core Real Estate</span>
     <div class="avatar"><img src="donald-lane.jpg" alt="Donald Lane"></div>
-    <h1>Donald Lane</h1>
-    <div class="role">Real Estate Agent · Ras Al Khaimah, UAE</div>
+    <h1 data-i18n="name">Donald Lane</h1>
+    <div class="role" data-i18n="role">Real Estate Agent · Ras Al Khaimah, UAE</div>
   </div>
 
   <div class="card-body">
     <div class="actions">
       <a class="act" href="tel:+971504843192">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h1.5a2.25 2.25 0 002.25-2.25v-1.372a1.5 1.5 0 00-1.106-1.447l-4.11-1.174a1.5 1.5 0 00-1.567.42l-.97 1.02a12.045 12.045 0 01-6.113-6.113l1.02-.97a1.5 1.5 0 00.42-1.567L7.44 3.356a1.5 1.5 0 00-1.447-1.106H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
-        Call
+        <span data-i18n="actCall">Call</span>
       </a>
       <a class="act" href="https://wa.me/971504843192" target="_blank" rel="noopener">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 10.5h.008v.008H8.25V10.5zm3.75 0h.008v.008H12V10.5zm3.75 0h.008v.008h-.008V10.5zM21 12a9 9 0 11-18 0 9 9 0 0118 0zM6 20l1.2-3.6A8.96 8.96 0 016 12"/></svg>
-        WhatsApp
+        <span data-i18n="actWhatsapp">WhatsApp</span>
       </a>
       <a class="act" href="mailto:lane.donald@gmail.com">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
-        Email
+        <span data-i18n="actEmail">Email</span>
       </a>
     </div>
 
     <ul class="info-list">
-      <li><span class="k">Phone</span><a href="tel:+971504843192">050 484 3192</a></li>
-      <li><span class="k">Email</span><a href="mailto:lane.donald@gmail.com">lane.donald@gmail.com</a></li>
-      <li><span class="k">Brokerage</span><a href="https://kandcorealestate.ae/agent/donald-john-lane/" target="_blank" rel="noopener">K&amp;Core Real Estate ↗</a></li>
-      <li><span class="k">Instagram</span><a href="https://instagram.com/RAKPropertyPro" target="_blank" rel="noopener">@RAKPropertyPro</a></li>
+      <li><span class="k" data-i18n="labelPhone">Phone</span><a href="tel:+971504843192">050 484 3192</a></li>
+      <li><span class="k" data-i18n="labelEmail">Email</span><a href="mailto:lane.donald@gmail.com">lane.donald@gmail.com</a></li>
+      <li><span class="k" data-i18n="labelBrokerage">Brokerage</span><a href="https://kandcorealestate.ae/agent/donald-john-lane/" target="_blank" rel="noopener" data-i18n="brokerageLink">K&amp;Core Real Estate ↗</a></li>
+      <li><span class="k" data-i18n="labelInstagram">Instagram</span><a href="https://instagram.com/RAKPropertyPro" target="_blank" rel="noopener">@RAKPropertyPro</a></li>
     </ul>
 
-    <button class="save-btn" onclick="saveContact()">Save Contact</button>
+    <button class="save-btn" onclick="saveContact()" data-i18n="saveBtn">Save Contact</button>
 
     <div class="qr-block">
-      <span class="eyebrow">Scan to WhatsApp</span>
+      <span class="eyebrow" data-i18n="qrLabel">Scan to WhatsApp</span>
       <div id="qrcode"></div>
       <div class="qr-caption">wa.me/971504843192</div>
     </div>
   </div>
 
   <div class="card-foot">
-    <a href="index.html">← Back to full profile</a>
+    <a href="index.html" data-i18n="backLink">← Back to full profile</a>
   </div>
 </div>
 
@@ -241,6 +290,48 @@
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
+
+  const translations = {
+    agency: { en: "K&amp;Core Real Estate", ar: "كي آند كور العقارية" },
+    name: { en: "Donald Lane", ar: "دونالد لين" },
+    role: { en: "Real Estate Agent · Ras Al Khaimah, UAE", ar: "وسيط عقاري · رأس الخيمة، الإمارات" },
+    actCall: { en: "Call", ar: "اتصال" },
+    actWhatsapp: { en: "WhatsApp", ar: "واتساب" },
+    actEmail: { en: "Email", ar: "البريد" },
+    labelPhone: { en: "Phone", ar: "الهاتف" },
+    labelEmail: { en: "Email", ar: "البريد الإلكتروني" },
+    labelBrokerage: { en: "Brokerage", ar: "الوكالة العقارية" },
+    brokerageLink: { en: "K&amp;Core Real Estate ↗", ar: "كي آند كور العقارية ↗" },
+    labelInstagram: { en: "Instagram", ar: "إنستغرام" },
+    saveBtn: { en: "Save Contact", ar: "حفظ جهة الاتصال" },
+    qrLabel: { en: "Scan to WhatsApp", ar: "امسح للتواصل عبر واتساب" },
+    backLink: { en: "← Back to full profile", ar: "→ العودة إلى الملف الكامل" }
+  };
+
+  function applyTranslations(lang){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      const key = el.getAttribute('data-i18n');
+      if(translations[key]) el.innerHTML = translations[key][lang];
+    });
+  }
+
+  function setLang(lang){
+    const isAr = lang === 'ar';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+    document.body.classList.toggle('lang-ar', isAr);
+    document.getElementById('btn-en').classList.toggle('active', !isAr);
+    document.getElementById('btn-ar').classList.toggle('active', isAr);
+    applyTranslations(lang);
+    document.title = isAr ? 'دونالد لين — البطاقة الرقمية' : 'Donald Lane — Digital Card';
+    try{ localStorage.setItem('site-lang', lang); }catch(e){}
+  }
+
+  (function(){
+    let saved = 'en';
+    try{ saved = localStorage.getItem('site-lang') || 'en'; }catch(e){}
+    if(saved === 'ar') setLang('ar');
+  })();
 </script>
 
 </body>

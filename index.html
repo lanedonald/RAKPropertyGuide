@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Donald Lane | Real Estate, Ras Al Khaimah</title>
-<meta name="description" content="Donald Lane — Real Estate Agent, K&Core Real Estate, Ras Al Khaimah, UAE.">
+<title id="i18n-title">Donald Lane | Real Estate, Ras Al Khaimah</title>
+<meta id="i18n-desc" name="description" content="Donald Lane — Real Estate Agent, K&Core Real Estate, Ras Al Khaimah, UAE.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Markazi+Text:wght@500;600;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --navy: #0B2027;
@@ -58,6 +58,32 @@
   .brand .name{ white-space:nowrap; }
   .brand .agency{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .brand span.sep{color:var(--gold-bright); flex-shrink:0;}
+
+  .nav-right{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+
+  .lang-toggle{
+    display:inline-flex;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .lang-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    letter-spacing:0.04em;
+    padding:9px 12px;
+    background:transparent;
+    color:var(--sand-dim);
+    border:none;
+    cursor:pointer;
+    transition: all .15s ease;
+  }
+  .lang-btn + .lang-btn{ border-left:1px solid var(--line); }
+  body.lang-ar .lang-btn + .lang-btn{ border-left:none; border-right:1px solid var(--line); }
+  .lang-btn.active{ background:var(--gold); color:var(--navy); font-weight:600; }
+  .lang-btn:hover:not(.active){ color:var(--gold-bright); }
+
   .nav-cta{
     display:inline-flex; align-items:center; gap:8px;
     font-family:'IBM Plex Mono', monospace;
@@ -150,6 +176,24 @@
   footer p{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--sand-dim); letter-spacing:0.04em; }
   footer a{ color:var(--gold-bright); text-decoration:none; }
 
+  /* Arabic mode overrides */
+  body.lang-ar{ direction:rtl; }
+  body.lang-ar, body.lang-ar h1, body.lang-ar h2, body.lang-ar h3{
+    font-family:'Markazi Text', 'Cairo', serif;
+  }
+  body.lang-ar{ font-family:'Cairo', sans-serif; }
+  body.lang-ar .eyebrow,
+  body.lang-ar .nav-cta,
+  body.lang-ar .lang-btn,
+  body.lang-ar .contact-list .label,
+  body.lang-ar footer p{
+    font-family:'Cairo', sans-serif;
+    letter-spacing:0;
+    text-transform:none;
+  }
+  body.lang-ar .hero h1{ line-height:1.35; }
+  body.lang-ar .about-grid h2{ line-height:1.5; }
+
   @media (max-width: 820px){
     .hero-grid{ grid-template-columns:1fr; }
     .hero-photo{ justify-self:start; order:-1; width:100%; }
@@ -161,10 +205,11 @@
   }
 
   @media (max-width: 480px){
-    nav.wrap{ padding:0 16px; gap:8px; }
-    .brand{ font-size:1rem; gap:6px; }
-    .brand .agency{ max-width:44vw; }
-    .nav-cta{ padding:8px 11px; font-size:0.64rem; }
+    nav.wrap{ padding:0 16px; gap:6px; }
+    .brand{ font-size:0.95rem; gap:5px; }
+    .brand .agency{ max-width:22vw; }
+    .nav-cta{ display:none; }
+    .lang-btn{ padding:8px 10px; font-size:0.68rem; }
     .hero-photo .frame{ width:100%; height:auto; aspect-ratio: 280 / 380; }
   }
 
@@ -178,23 +223,42 @@
 </style>
 </head>
 <body>
+<script>
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  window.addEventListener('load', function(){
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  });
+</script>
+
 
 <header>
   <nav class="wrap">
-    <div class="brand"><span class="name">Donald Lane</span><span class="sep">·</span><span class="agency">K&amp;Core Real Estate</span></div>
-    <a class="nav-cta" href="#contact">Get in touch</a>
+    <div class="brand">
+      <span class="name" data-i18n="brandName">Donald Lane</span><span class="sep">·</span><span class="agency" data-i18n="brandAgency">K&amp;Core Real Estate</span>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language toggle">
+        <button type="button" class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+        <button type="button" class="lang-btn" id="btn-ar" onclick="setLang('ar')">عربي</button>
+      </div>
+      <a class="nav-cta" href="#contact" data-i18n="navCta">Get in touch</a>
+    </div>
   </nav>
 </header>
 
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Real Estate Agent — Ras Al Khaimah</div>
-      <h1>Confident property decisions, on the UAE's <em>fastest-growing</em> coast.</h1>
-      <p class="lede">A former teacher trainer and leader turned real estate agent, helping buyers and investors navigate Ras Al Khaimah with clarity, patience, and a straight answer.</p>
+      <div class="eyebrow" data-i18n="heroEyebrow">Real Estate Agent — Ras Al Khaimah</div>
+      <h1 data-i18n-html="heroH1">Confident property decisions, on the UAE's <em>fastest-growing</em> coast.</h1>
+      <p class="lede" data-i18n="heroLede">A former teacher trainer and leader turned real estate agent, helping buyers and investors navigate Ras Al Khaimah with clarity, patience, and a straight answer.</p>
       <div class="cta-row">
-        <a class="btn btn-solid" href="https://wa.me/971504843192" target="_blank" rel="noopener">WhatsApp Me</a>
-        <a class="btn btn-outline" href="tel:+971504843192">Call +971 50 484 3192</a>
+        <a class="btn btn-solid" href="https://wa.me/971504843192" target="_blank" rel="noopener" data-i18n="btnWhatsapp">WhatsApp Me</a>
+        <a class="btn btn-outline" href="tel:+971504843192" data-i18n="btnCall">Call +971 50 484 3192</a>
       </div>
     </div>
     <div class="hero-photo">
@@ -213,32 +277,32 @@
 <section id="about">
   <div class="wrap about-grid">
     <div>
-      <div class="eyebrow">About</div>
-      <h2>A decade of leadership,<br>a decade on the coast.</h2>
+      <div class="eyebrow" data-i18n="aboutEyebrow">About</div>
+      <h2 data-i18n-html="aboutH2">A decade of leadership,<br>a decade on the coast.</h2>
     </div>
     <div>
-      <p>With over a decade of experience as a teacher trainer and leader, Donald has built a strong foundation in communication, guidance, and understanding people's needs.</p>
-      <p>His journey into real estate began in the United States, where a decade of hands-on property experience sparked a lasting passion for the industry. Inspired by this experience, and after a decade living in Ras Al Khaimah, he chose to pursue his real estate career there, helping clients make confident property decisions in one of the UAE's fastest-growing destinations.</p>
-      <p>Known for his approachable personality and clear communication style, he enjoys connecting with people and building lasting relationships. Beyond real estate, he is a dedicated sports enthusiast who values teamwork, discipline, and an active lifestyle — qualities he brings into his professional life every day.</p>
+      <p data-i18n="aboutP1">With over a decade of experience as a teacher trainer and leader, Donald has built a strong foundation in communication, guidance, and understanding people's needs.</p>
+      <p data-i18n="aboutP2">His journey into real estate began in the United States, where a decade of hands-on property experience sparked a lasting passion for the industry. Inspired by this experience, and after a decade living in Ras Al Khaimah, he chose to pursue his real estate career there, helping clients make confident property decisions in one of the UAE's fastest-growing destinations.</p>
+      <p data-i18n="aboutP3">Known for his approachable personality and clear communication style, he enjoys connecting with people and building lasting relationships. Beyond real estate, he is a dedicated sports enthusiast who values teamwork, discipline, and an active lifestyle — qualities he brings into his professional life every day.</p>
     </div>
   </div>
 
   <div class="wrap">
     <div class="path">
       <div class="cell">
-        <div class="eyebrow">01 — Teaching</div>
-        <h3>A decade of leadership</h3>
-        <p>Communication and patience, sharpened over a decade as a teacher trainer and leader — now applied to every client conversation.</p>
+        <div class="eyebrow" data-i18n="cell1Eyebrow">01 — Teaching</div>
+        <h3 data-i18n="cell1H3">A decade of leadership</h3>
+        <p data-i18n="cell1P">Communication and patience, sharpened over a decade as a teacher trainer and leader — now applied to every client conversation.</p>
       </div>
       <div class="cell">
-        <div class="eyebrow">02 — United States</div>
-        <h3>Where it started</h3>
-        <p>A decade of hands-on real estate experience in the US sparked the move into property full-time.</p>
+        <div class="eyebrow" data-i18n="cell2Eyebrow">02 — United States</div>
+        <h3 data-i18n="cell2H3">Where it started</h3>
+        <p data-i18n="cell2P">A decade of hands-on real estate experience in the US sparked the move into property full-time.</p>
       </div>
       <div class="cell">
-        <div class="eyebrow">03 — Ras Al Khaimah</div>
-        <h3>A decade at home here</h3>
-        <p>A decade living in RAK, now focused on the emirate's fast-growing market — from established communities to emerging waterfront developments.</p>
+        <div class="eyebrow" data-i18n="cell3Eyebrow">03 — Ras Al Khaimah</div>
+        <h3 data-i18n="cell3H3">A decade at home here</h3>
+        <p data-i18n="cell3P">A decade living in RAK, now focused on the emirate's fast-growing market — from established communities to emerging waterfront developments.</p>
       </div>
     </div>
   </div>
@@ -248,34 +312,34 @@
   <div class="wrap">
     <div class="contact-grid">
       <div>
-        <div class="eyebrow">Get in touch</div>
-        <h2>Let's talk property.</h2>
-        <p class="lede">Whether you're buying, selling, or just exploring what Ras Al Khaimah has to offer — reach out directly.</p>
+        <div class="eyebrow" data-i18n="contactEyebrow">Get in touch</div>
+        <h2 data-i18n="contactH2">Let's talk property.</h2>
+        <p class="lede" data-i18n="contactLede">Whether you're buying, selling, or just exploring what Ras Al Khaimah has to offer — reach out directly.</p>
         <ul class="contact-list">
           <li>
-            <span class="label">Phone</span>
+            <span class="label" data-i18n="labelPhone">Phone</span>
             <a href="tel:+971504843192">+971 50 484 3192</a>
           </li>
           <li>
-            <span class="label">WhatsApp</span>
-            <a href="https://wa.me/971504843192" target="_blank" rel="noopener">Message on WhatsApp</a>
+            <span class="label" data-i18n="labelWhatsapp">WhatsApp</span>
+            <a href="https://wa.me/971504843192" target="_blank" rel="noopener" data-i18n="linkWhatsapp">Message on WhatsApp</a>
           </li>
           <li>
-            <span class="label">Email</span>
+            <span class="label" data-i18n="labelEmail">Email</span>
             <a href="mailto:lane.donald@gmail.com">lane.donald@gmail.com</a>
           </li>
           <li>
-            <span class="label">Instagram</span>
+            <span class="label" data-i18n="labelInstagram">Instagram</span>
             <a href="https://instagram.com/RAKPropertyPro" target="_blank" rel="noopener">@RAKPropertyPro</a>
           </li>
         </ul>
       </div>
 
       <div class="brokerage-card">
-        <div class="eyebrow">Brokerage</div>
-        <h3>K&amp;Core Real Estate</h3>
-        <p>Donald operates under K&amp;Core Real Estate, a solution-based brokerage focused on capital-appreciating investments across the UAE.</p>
-        <a class="btn btn-outline" href="https://kandcorealestate.ae/agent/donald-john-lane/" target="_blank" rel="noopener">View full agent profile →</a>
+        <div class="eyebrow" data-i18n="brokerageEyebrow">Brokerage</div>
+        <h3 data-i18n="brokerageH3">K&amp;Core Real Estate</h3>
+        <p data-i18n="brokerageP">Donald operates under K&amp;Core Real Estate, a solution-based brokerage focused on capital-appreciating investments across the UAE.</p>
+        <a class="btn btn-outline" href="https://kandcorealestate.ae/agent/donald-john-lane/" target="_blank" rel="noopener" data-i18n="brokerageBtn">View full agent profile →</a>
       </div>
     </div>
   </div>
@@ -283,9 +347,81 @@
 
 <footer>
   <div class="wrap">
-    <p>Donald Lane · K&amp;Core Real Estate · Ras Al Khaimah, UAE &nbsp;·&nbsp; <a href="card.html">Digital business card ↗</a></p>
+    <p><span data-i18n="footerName">Donald Lane</span> · <span data-i18n="footerAgency">K&amp;Core Real Estate</span> · <span data-i18n="footerLocation">Ras Al Khaimah, UAE</span> &nbsp;·&nbsp; <a href="card.html" data-i18n="footerCard">Digital business card ↗</a></p>
   </div>
 </footer>
+
+<script>
+  const translations = {
+    brandName: { en: "Donald Lane", ar: "دونالد لين" },
+    brandAgency: { en: "K&amp;Core Real Estate", ar: "كي آند كور العقارية" },
+    navCta: { en: "Get in touch", ar: "تواصل معنا" },
+    heroEyebrow: { en: "Real Estate Agent — Ras Al Khaimah", ar: "وسيط عقاري — رأس الخيمة" },
+    heroH1: { en: "Confident property decisions, on the UAE's <em>fastest-growing</em> coast.", ar: "قرارات عقارية واثقة، على <em>أسرع</em> سواحل الإمارات نمواً." },
+    heroLede: { en: "A former teacher trainer and leader turned real estate agent, helping buyers and investors navigate Ras Al Khaimah with clarity, patience, and a straight answer.", ar: "مدرب ومدير معلمين سابق تحول إلى وسيط عقاري، يساعد المشترين والمستثمرين على اتخاذ قراراتهم في رأس الخيمة بوضوح وصبر وإجابات مباشرة." },
+    btnWhatsapp: { en: "WhatsApp Me", ar: "راسلني عبر واتساب" },
+    btnCall: { en: "Call +971 50 484 3192", ar: "اتصل ٥٠ ٤٨٤ ٣١٩٢ 971+" },
+    aboutEyebrow: { en: "About", ar: "نبذة" },
+    aboutH2: { en: "A decade of leadership,<br>a decade on the coast.", ar: "عقد من القيادة،<br>وعقد على الساحل." },
+    aboutP1: { en: "With over a decade of experience as a teacher trainer and leader, Donald has built a strong foundation in communication, guidance, and understanding people's needs.", ar: "بفضل أكثر من عقد من الخبرة كمدرب وقائد للمعلمين، بنى دونالد أساساً قوياً في التواصل والتوجيه وفهم احتياجات الناس." },
+    aboutP2: { en: "His journey into real estate began in the United States, where a decade of hands-on property experience sparked a lasting passion for the industry. Inspired by this experience, and after a decade living in Ras Al Khaimah, he chose to pursue his real estate career there, helping clients make confident property decisions in one of the UAE's fastest-growing destinations.", ar: "بدأت رحلته في مجال العقارات في الولايات المتحدة، حيث أشعل عقد من الخبرة العملية شغفاً دائماً بهذا المجال. وبعد عقد من العيش في رأس الخيمة، اختار متابعة مسيرته العقارية هناك، ليساعد العملاء على اتخاذ قرارات عقارية واثقة في واحدة من أسرع الوجهات نمواً في الإمارات." },
+    aboutP3: { en: "Known for his approachable personality and clear communication style, he enjoys connecting with people and building lasting relationships. Beyond real estate, he is a dedicated sports enthusiast who values teamwork, discipline, and an active lifestyle — qualities he brings into his professional life every day.", ar: "يُعرف بشخصيته السهلة وأسلوبه الواضح في التواصل، ويستمتع بالتواصل مع الناس وبناء علاقات دائمة. وإلى جانب العقارات، فهو من عشاق الرياضة الذين يقدّرون العمل الجماعي والانضباط ونمط الحياة النشط — وهي صفات يحملها معه في حياته المهنية كل يوم." },
+    cell1Eyebrow: { en: "01 — Teaching", ar: "٠١ — التدريس" },
+    cell1H3: { en: "A decade of leadership", ar: "عقد من القيادة" },
+    cell1P: { en: "Communication and patience, sharpened over a decade as a teacher trainer and leader — now applied to every client conversation.", ar: "مهارات التواصل والصبر، صقلتها عقد من العمل كمدرب وقائد للمعلمين — يطبقها اليوم في كل محادثة مع العملاء." },
+    cell2Eyebrow: { en: "02 — United States", ar: "٠٢ — الولايات المتحدة" },
+    cell2H3: { en: "Where it started", ar: "حيث بدأت الرحلة" },
+    cell2P: { en: "A decade of hands-on real estate experience in the US sparked the move into property full-time.", ar: "عقد من الخبرة العملية في العقارات بالولايات المتحدة كان الدافع للتفرغ الكامل لهذا المجال." },
+    cell3Eyebrow: { en: "03 — Ras Al Khaimah", ar: "٠٣ — رأس الخيمة" },
+    cell3H3: { en: "A decade at home here", ar: "عقد من الإقامة هنا" },
+    cell3P: { en: "A decade living in RAK, now focused on the emirate's fast-growing market — from established communities to emerging waterfront developments.", ar: "عقد من العيش في رأس الخيمة، يركّز الآن على السوق سريع النمو في الإمارة — من المجتمعات الراسخة إلى المشاريع الساحلية الناشئة." },
+    contactEyebrow: { en: "Get in touch", ar: "تواصل معنا" },
+    contactH2: { en: "Let's talk property.", ar: "لنتحدث عن العقارات." },
+    contactLede: { en: "Whether you're buying, selling, or just exploring what Ras Al Khaimah has to offer — reach out directly.", ar: "سواء كنت تشتري أو تبيع أو تستكشف ما تقدّمه رأس الخيمة — تواصل معي مباشرة." },
+    labelPhone: { en: "Phone", ar: "الهاتف" },
+    labelWhatsapp: { en: "WhatsApp", ar: "واتساب" },
+    linkWhatsapp: { en: "Message on WhatsApp", ar: "راسلني عبر واتساب" },
+    labelEmail: { en: "Email", ar: "البريد الإلكتروني" },
+    labelInstagram: { en: "Instagram", ar: "إنستغرام" },
+    brokerageEyebrow: { en: "Brokerage", ar: "الوكالة العقارية" },
+    brokerageH3: { en: "K&amp;Core Real Estate", ar: "كي آند كور العقارية" },
+    brokerageP: { en: "Donald operates under K&amp;Core Real Estate, a solution-based brokerage focused on capital-appreciating investments across the UAE.", ar: "يعمل دونالد ضمن كي آند كور العقارية، وكالة عقارية تركّز على الحلول والاستثمارات ذات القيمة المتنامية في جميع أنحاء الإمارات." },
+    brokerageBtn: { en: "View full agent profile →", ar: "عرض الملف الكامل للوسيط ←" },
+    footerName: { en: "Donald Lane", ar: "دونالد لين" },
+    footerAgency: { en: "K&amp;Core Real Estate", ar: "كي آند كور العقارية" },
+    footerLocation: { en: "Ras Al Khaimah, UAE", ar: "رأس الخيمة، الإمارات" },
+    footerCard: { en: "Digital business card ↗", ar: "البطاقة الرقمية ↗" }
+  };
+
+  function applyTranslations(lang){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      const key = el.getAttribute('data-i18n');
+      if(translations[key]) el.textContent = translations[key][lang];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      const key = el.getAttribute('data-i18n-html');
+      if(translations[key]) el.innerHTML = translations[key][lang];
+    });
+  }
+
+  function setLang(lang){
+    const isAr = lang === 'ar';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+    document.body.classList.toggle('lang-ar', isAr);
+    document.getElementById('btn-en').classList.toggle('active', !isAr);
+    document.getElementById('btn-ar').classList.toggle('active', isAr);
+    applyTranslations(lang);
+    document.title = isAr ? 'دونالد لين | عقارات، رأس الخيمة' : 'Donald Lane | Real Estate, Ras Al Khaimah';
+    try{ localStorage.setItem('site-lang', lang); }catch(e){}
+  }
+
+  (function(){
+    let saved = 'en';
+    try{ saved = localStorage.getItem('site-lang') || 'en'; }catch(e){}
+    if(saved === 'ar') setLang('ar');
+  })();
+</script>
 
 </body>
 </html>

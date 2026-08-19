@@ -205,17 +205,18 @@
   }
 
   @media (max-width: 480px){
-    nav.wrap{ padding:0 16px; gap:6px; }
-    .brand{ font-size:0.95rem; gap:5px; }
-    .brand .agency{ max-width:22vw; }
-    .nav-cta{ display:none; }
-    .lang-btn{ padding:8px 10px; font-size:0.68rem; }
+    nav.wrap{ padding:0 16px; gap:8px; }
+    .brand{ font-size:1rem; gap:6px; }
+    .brand .agency{ max-width:32vw; }
+    .nav-cta{ padding:8px 11px; font-size:0.64rem; }
+    .lang-btn{ padding:8px 9px; font-size:0.64rem; }
     .hero-photo .frame{ width:100%; height:auto; aspect-ratio: 280 / 380; }
   }
 
   @media (max-width: 360px){
     .brand .agency{ display:none; }
     .brand .sep{ display:none; }
+    .nav-cta{ display:none; }
   }
 
   :focus-visible{ outline:2px solid var(--gold-bright); outline-offset:3px; }
@@ -228,10 +229,7 @@
   if (window.location.hash) {
     history.replaceState(null, '', window.location.pathname + window.location.search);
   }
-  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  window.addEventListener('load', function(){
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  });
+  window.scrollTo(0, 0);
 </script>
 
 

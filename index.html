@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Donald John Lane | Real Estate, Ras Al Khaimah</title>
-<meta name="description" content="Donald John Lane — Real Estate Agent, K&Core Real Estate, Ras Al Khaimah, UAE.">
+<title>Donald Lane | Real Estate, Ras Al Khaimah</title>
+<meta name="description" content="Donald Lane — Real Estate Agent, K&Core Real Estate, Ras Al Khaimah, UAE.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -53,9 +53,11 @@
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
-  nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:76px; }
-  .brand{ display:flex; align-items:center; gap:12px; font-family:'Fraunces', serif; font-size:1.15rem; font-weight:500; letter-spacing:0.01em; }
-  .brand span{color:var(--gold-bright);}
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; gap:12px; height:76px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-size:1.15rem; font-weight:500; letter-spacing:0.01em; min-width:0; }
+  .brand .name{ white-space:nowrap; }
+  .brand .agency{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .brand span.sep{color:var(--gold-bright); flex-shrink:0;}
   .nav-cta{
     display:inline-flex; align-items:center; gap:8px;
     font-family:'IBM Plex Mono', monospace;
@@ -167,6 +169,18 @@
     nav.wrap{ height:64px; }
   }
 
+  @media (max-width: 480px){
+    nav.wrap{ padding:0 16px; gap:8px; }
+    .brand{ font-size:0.88rem; gap:6px; }
+    .brand .agency{ max-width:38vw; }
+    .nav-cta{ padding:9px 13px; font-size:0.68rem; }
+  }
+
+  @media (max-width: 360px){
+    .brand .agency{ display:none; }
+    .brand .sep{ display:none; }
+  }
+
   :focus-visible{ outline:2px solid var(--gold-bright); outline-offset:3px; }
   @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
 </style>
@@ -175,7 +189,7 @@
 
 <header>
   <nav class="wrap">
-    <div class="brand">Donald John Lane <span>·</span> K&amp;Core Real Estate</div>
+    <div class="brand"><span class="name">Donald Lane</span><span class="sep">·</span><span class="agency">K&amp;Core Real Estate</span></div>
     <a class="nav-cta" href="#contact">Get in touch</a>
   </nav>
 </header>
@@ -193,7 +207,7 @@
     </div>
     <div class="hero-photo">
       <div class="frame">
-        <img src="donald-lane.jpg" alt="Portrait of Donald John Lane">
+        <img src="donald-lane.jpg" alt="Portrait of Donald Lane">
       </div>
       <div class="tag">K&amp;Core Real Estate</div>
     </div>
@@ -278,7 +292,7 @@
 
 <footer>
   <div class="wrap">
-    <p>Donald John Lane · K&amp;Core Real Estate · Ras Al Khaimah, UAE &nbsp;·&nbsp; <a href="card.html">Digital business card ↗</a></p>
+    <p>Donald Lane · K&amp;Core Real Estate · Ras Al Khaimah, UAE &nbsp;·&nbsp; <a href="card.html">Digital business card ↗</a></p>
   </div>
 </footer>
 

@@ -56,8 +56,6 @@
   nav.wrap{ display:flex; align-items:center; justify-content:space-between; gap:12px; height:76px; }
   .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-size:1.15rem; font-weight:500; letter-spacing:0.01em; min-width:0; }
   .brand .name{ white-space:nowrap; }
-  .brand .agency{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .brand span.sep{color:var(--gold-bright); flex-shrink:0;}
 
   .nav-right{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
 
@@ -205,17 +203,17 @@
   }
 
   @media (max-width: 480px){
-    nav.wrap{ padding:0 16px; gap:6px; }
-    .brand{ font-size:0.95rem; gap:5px; }
-    .brand .agency{ max-width:22vw; }
-    .nav-cta{ display:none; }
-    .lang-btn{ padding:8px 10px; font-size:0.68rem; }
+    nav.wrap{ padding:0 16px; gap:10px; }
+    .brand{ font-size:1.02rem; }
+    .nav-cta{ padding:9px 14px; font-size:0.7rem; }
+    .lang-btn{ padding:8px 11px; font-size:0.7rem; }
     .hero-photo .frame{ width:100%; height:auto; aspect-ratio: 280 / 380; }
   }
 
   @media (max-width: 360px){
-    .brand .agency{ display:none; }
-    .brand .sep{ display:none; }
+    .brand{ font-size:0.94rem; }
+    .nav-cta{ padding:8px 11px; font-size:0.64rem; }
+    .lang-btn{ padding:7px 9px; font-size:0.64rem; }
   }
 
   :focus-visible{ outline:2px solid var(--gold-bright); outline-offset:3px; }
@@ -238,7 +236,7 @@
 <header>
   <nav class="wrap">
     <div class="brand">
-      <span class="name" data-i18n="brandName">Donald Lane</span><span class="sep">·</span><span class="agency" data-i18n="brandAgency">K&amp;Core Real Estate</span>
+      <span class="name" data-i18n="brandName">Donald Lane</span>
     </div>
     <div class="nav-right">
       <div class="lang-toggle" role="group" aria-label="Language toggle">
@@ -354,7 +352,6 @@
 <script>
   const translations = {
     brandName: { en: "Donald Lane", ar: "دونالد لين" },
-    brandAgency: { en: "K&amp;Core Real Estate", ar: "كي آند كور العقارية" },
     navCta: { en: "Get in touch", ar: "تواصل معنا" },
     heroEyebrow: { en: "Real Estate Agent — Ras Al Khaimah", ar: "وسيط عقاري — رأس الخيمة" },
     heroH1: { en: "Confident property decisions, on the UAE's <em>fastest-growing</em> coast.", ar: "قرارات عقارية واثقة، على <em>أسرع</em> سواحل الإمارات نمواً." },
